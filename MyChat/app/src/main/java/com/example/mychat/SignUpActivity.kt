@@ -36,7 +36,7 @@ class SignUpActivity : AppCompatActivity() {
                     Log.d("SINGUP", "same pass")
                     auth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener {
                         if (it.isSuccessful) {
-                            val intent = Intent(this, LoginActivity::class.java)
+                            val intent = Intent(this, DashboardActivity::class.java)
                             startActivity(intent)
                             Log.d("SIGNUP", "SUCCESSFULL")
                         } else {
