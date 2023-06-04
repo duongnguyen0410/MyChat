@@ -7,43 +7,32 @@ import com.example.mychat.BottomNav.ChatFragment
 import com.example.mychat.BottomNav.ContactFragment
 import com.example.mychat.BottomNav.ProfileFragment
 import com.example.mychat.databinding.ActivityDashboardBinding
-import com.ismaeldivita.chipnavigation.ChipNavigationBar
-
-private var fragment: Fragment? = null
-private lateinit var chipNavBar: ChipNavigationBar
-private lateinit var binding: ActivityDashboardBinding;
 
 class DashboardActivity : AppCompatActivity() {
+
+    private lateinit var binding : ActivityDashboardBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_dashboard)
-        val chip = findViewById<ChipNavigationBar>(R.id.menu);
+        binding = ActivityDashboardBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        replaceFragment(ChatFragment())
 
-        if(savedInstanceState == null){
-            supportFragmentManager.beginTransaction().replace(R.id.container, ChatFragment()).commit()
-            chip.setItemSelected(R.id.btn_chat)
-        }
+        binding.bottomNavigation.setOnItemSelectedListener {
+            when(it.itemId){
+                R.id.ic_chat -> replaceFragment(ChatFragment())
+                R.id.ic_contact -> replaceFragment(ContactFragment())
+                R.id.ic_profile -> replaceFragment(ProfileFragment())
 
-        chip.setOnItemSelectedListener { id ->
-            when (id) {
-                R.id.btn_chat -> {
-                    fragment = ChatFragment()
-                }
-
-                R.id.btn_contact -> {
-                    fragment = ContactFragment()
-                }
-
-                R.id.btn_profile -> {
-                    fragment = ProfileFragment()
-                }
             }
-            fragment!!.let {
-                supportFragmentManager.beginTransaction().replace(R.id.container, fragment!!)
-                    .commit()
-            }
+            true
         }
+    }
 
-
+    private fun replaceFragment(fragment: Fragment){
+        val fragmentManager = supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.container, fragment)
+        fragmentTransaction.commit()
     }
 }

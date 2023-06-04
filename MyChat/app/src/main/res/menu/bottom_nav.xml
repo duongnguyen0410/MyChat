@@ -3,33 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/btn_chat"
+        android:id="@+id/ic_chat"
         android:enabled="true"
-        android:icon="@drawable/ic_chat"
-        android:title="@string/chat"
-        app:cnb_backgroundColor="@color/custom_blue"
-        app:cnb_iconColor="@color/design_default_color_on_primary"
-        app:cnb_iconTintMode="src_in"
-        app:cnb_textColor="@color/design_default_color_on_primary" />
+        android:icon="@drawable/ic_chat_selector"
+        android:title="Chat"/>
 
     <item
-        android:id="@+id/btn_contact"
-        android:enabled="true"
-        android:icon="@drawable/ic_contact"
-        android:title="@string/contact"
-        app:cnb_backgroundColor="@color/custom_blue"
-        app:cnb_iconColor="@color/design_default_color_on_primary"
-        app:cnb_iconTintMode="src_in"
-        app:cnb_textColor="@color/design_default_color_on_primary" />
+        android:id="@+id/ic_contact"
+        android:icon="@drawable/ic_contact_selector"
+        android:title="Contact"/>
 
     <item
-        android:id="@+id/btn_profile"
-        android:enabled="true"
-        android:icon="@drawable/ic_profile"
-        android:title="@string/profile"
-        app:cnb_backgroundColor="@color/custom_blue"
-        app:cnb_iconColor="@color/design_default_color_on_primary"
-        app:cnb_iconTintMode="src_in"
-        app:cnb_textColor="@color/design_default_color_on_primary" />
+        android:id="@+id/ic_profile"
+        android:icon="@drawable/ic_profile_selector"
+        android:title="Profile"/>
 
 </menu>
