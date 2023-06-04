@@ -80,9 +80,11 @@ class LoginActivity : AppCompatActivity() {
         if (task.isSuccessful){
             val account: GoogleSignInAccount? = task.result
             if(account != null){
+                // Login with Google success
                 updateUI(account)
             }
         }else{
+            // Login with Google failed
             Log.e("GoogleSignIn", task.exception.toString())
         }
     }
