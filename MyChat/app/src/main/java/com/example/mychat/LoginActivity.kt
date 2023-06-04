@@ -1,9 +1,12 @@
 package com.example.mychat
 
 import android.app.Activity
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -15,6 +18,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.SignInButton
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 
 class LoginActivity : AppCompatActivity() {
@@ -30,7 +34,10 @@ class LoginActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
+        val btLogin: Button = binding.btLogin2
         val btGGLogin: SignInButton = binding.btGGLogin
+        val etEmail: EditText = binding.etEmail
+        val etPassword: EditText = binding.etPassword
 
         val googleTextView: TextView = btGGLogin.getChildAt(0) as TextView
         googleTextView.text = "Log in wigh Google"
@@ -42,6 +49,14 @@ class LoginActivity : AppCompatActivity() {
             .requestEmail()
             .build()
         googleSignInClient = GoogleSignIn.getClient(this, gso)
+
+        signOutGoogle()
+
+        btLogin.setOnClickListener {
+            val email = etEmail.text.toString()
+            val password = etPassword.text.toString()
+            signInWithEmailAndPassword(email, password)
+        }
 
         btGGLogin.setOnClickListener {
             signInGoogle()
@@ -77,9 +92,33 @@ class LoginActivity : AppCompatActivity() {
         auth.signInWithCredential(credential).addOnCompleteListener{
             if(it.isSuccessful){
                 Toast.makeText(this, "loginsuccess", Toast.LENGTH_SHORT).show()
+                val intent: Intent = Intent(this, DashboardActivity::class.java)
+                startActivity(intent)
             }else{
                 Log.e("GoogleSignIn", it.exception.toString())
             }
         }
+    }
+
+    private fun signOutGoogle() {
+        googleSignInClient.signOut().addOnCompleteListener(this) {
+            //Toast.makeText(this, "Logged out", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun signInWithEmailAndPassword(email: String, password: String) {
+        auth.signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    // Login success
+                    val user: FirebaseUser? = auth.currentUser
+                    Toast.makeText(this, "loginsuccess", Toast.LENGTH_SHORT).show()
+                    val intent: Intent = Intent(this, DashboardActivity::class.java)
+                    startActivity(intent)
+                } else {
+                    // Login Failed
+                    Toast.makeText(this, "Login failed.", Toast.LENGTH_SHORT).show()
+                }
+            }
     }
 }
