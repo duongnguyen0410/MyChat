@@ -43,6 +43,8 @@ class LoginActivity : AppCompatActivity() {
             .build()
         googleSignInClient = GoogleSignIn.getClient(this, gso)
 
+        signOutGoogle()
+
         btGGLogin.setOnClickListener {
             signInGoogle()
         }
@@ -80,6 +82,12 @@ class LoginActivity : AppCompatActivity() {
             }else{
                 Log.e("GoogleSignIn", it.exception.toString())
             }
+        }
+    }
+
+    private fun signOutGoogle() {
+        googleSignInClient.signOut().addOnCompleteListener(this) {
+            Toast.makeText(this, "Logged out", Toast.LENGTH_SHORT).show()
         }
     }
 }
