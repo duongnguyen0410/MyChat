@@ -83,8 +83,23 @@
         android:textSize="16sp"
         android:background="@drawable/edittext_background"/>
 
+    <EditText
+        android:id="@+id/etConfirmPassword"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="32dp"
+        android:hint="Enter your confirm password"
+        android:padding="16dp"
+        android:textColorHint="#636363"
+        android:ems="10"
+        android:inputType="textPassword"
+        android:textSize="16sp"
+        android:background="@drawable/edittext_background"/>
+
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btLogin2"
+        android:id="@+id/btn_sign_up"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Sign up"

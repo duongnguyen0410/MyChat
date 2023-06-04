@@ -6,12 +6,9 @@ import androidx.fragment.app.Fragment
 import com.example.mychat.BottomNav.ChatFragment
 import com.example.mychat.BottomNav.ContactFragment
 import com.example.mychat.BottomNav.ProfileFragment
-import com.example.mychat.databinding.ActivityDashboardBinding
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
 
 private var fragment: Fragment? = null
-private lateinit var chipNavBar: ChipNavigationBar
-private lateinit var binding: ActivityDashboardBinding;
 
 class DashboardActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,8 +16,9 @@ class DashboardActivity : AppCompatActivity() {
         setContentView(R.layout.activity_dashboard)
         val chip = findViewById<ChipNavigationBar>(R.id.menu);
 
-        if(savedInstanceState == null){
-            supportFragmentManager.beginTransaction().replace(R.id.container, ChatFragment()).commit()
+        if (savedInstanceState == null) {
+            supportFragmentManager.beginTransaction().replace(R.id.container, ChatFragment())
+                .commit()
             chip.setItemSelected(R.id.btn_chat)
         }
 
