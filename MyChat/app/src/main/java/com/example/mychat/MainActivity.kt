@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.btSignup.setOnClickListener {
-            val intent = Intent(this, SignUpActivity::class.java)
+            val intent = Intent(this, CreateProfileActivity::class.java)
             startActivity(intent)
         }
     }
