@@ -56,10 +56,11 @@
                         android:layout_marginTop="30dp"/>
 
                     <TextView
+                        android:id="@+id/tvUpload"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:onClick="onImageViewClick"
                         android:text="Upload"
+                        android:onClick="onImageViewClick"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="5dp"
                         android:textColor="@color/custom_blue"/>
