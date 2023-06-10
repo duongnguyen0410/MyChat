@@ -3,12 +3,15 @@ package com.example.mychat
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.mychat.databinding.ActivityCreateProfileBinding
@@ -18,9 +21,6 @@ import com.google.firebase.storage.ktx.storage
 import de.hdodenhof.circleimageview.CircleImageView
 
 class CreateProfileActivity : AppCompatActivity() {
-
-    private val PICK_IMAGE_REQUEST = 1
-    private val PERMISSION_REQUEST_CODE = 2
 
     private lateinit var ivProfile: CircleImageView
     private var selectedImageUri: Uri ?= null
@@ -39,31 +39,32 @@ class CreateProfileActivity : AppCompatActivity() {
 
         val storage = Firebase.storage
         storageReference = storage.reference
-
-//        val tvUpload: TextView = binding.tvUpload
-//        tvUpload.setOnClickListener {
-//            onImageViewClick()
-//        }
     }
 
+    //tvUpload Clicked
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     fun onImageViewClick(view: View) {
-//        lateinit var galleryIntent: Intent
-//        galleryIntent.setAction(Intent.ACTION_GET_CONTENT)
-//        galleryIntent.setType("image/*")
-//        startActivityForResult(galleryIntent, 2)
-        Log.d("tvUpload", "onImageViewClick: clicked")
+        openImagePicker()
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if(requestCode == 2 && resultCode == RESULT_OK && data != null){
-            selectedImageUri = data.data
-            ivProfile.setImageURI(selectedImageUri)
+        if(requestCode == 1){
+            // Get the url of the image from data
+            selectedImageUri = data?.data!!
+            if(null != selectedImageUri){
+                // Update the user image
+                ivProfile.setImageURI(selectedImageUri)
+            }
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private fun openImagePicker() {
-
+        // Open Image Picker
+        val intent = Intent(MediaStore.ACTION_PICK_IMAGES)
+        startActivityForResult(intent, 1)
     }
 }
