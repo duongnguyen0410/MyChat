@@ -113,7 +113,7 @@ class LoginActivity : AppCompatActivity() {
                     // Login success
                     val user: FirebaseUser? = auth.currentUser
                     Toast.makeText(this, "loginsuccess", Toast.LENGTH_SHORT).show()
-                    val intent: Intent = Intent(this, CreateProfileActivity::class.java)
+                    val intent: Intent = Intent(this, DashboardActivity::class.java)
                     startActivity(intent)
                 } else {
                     // Login Failed
