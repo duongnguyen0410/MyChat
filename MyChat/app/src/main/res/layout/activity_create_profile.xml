@@ -66,7 +66,7 @@
                         android:textColor="@color/custom_blue"/>
 
                     <EditText
-                        android:id="@+id/UserName"
+                        android:id="@+id/etUserName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
@@ -76,20 +76,21 @@
                         android:textSize="15sp"/>
 
                     <EditText
-                        android:id="@+id/edPhoneNumber"
+                        android:id="@+id/etPhoneNumber"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
                         android:layout_marginEnd="20dp"
                         android:layout_marginTop="10dp"
                         android:hint="Phone number"
+                        android:inputType="number"
                         android:textSize="15sp"/>
 
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/btDone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:onClick="onUploadButtonClick"
+                        android:onClick="onDoneButtonClick"
                         android:text="Done"
                         android:background="@drawable/button_background"
                         style="@android:style/Widget.Button"
