@@ -14,12 +14,14 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
+import androidx.appcompat.widget.AppCompatButton
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.mychat.Interfaces.AppConstants
 import com.example.mychat.databinding.ActivityCreateProfileBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
@@ -35,10 +37,10 @@ class CreateProfileActivity : AppCompatActivity() {
     private lateinit var ivProfile: CircleImageView
     private lateinit var etUsername: EditText
     private lateinit var etPhoneNum: EditText
-    private lateinit var btDone: Button
+    private lateinit var btDone: AppCompatButton
 
-    private var databaseReference: DatabaseReference? = null
     private var firebaseAuth: FirebaseAuth? = null
+    private var databaseReference: DatabaseReference? = null
     private var storageReference: StorageReference? = null
 
     private lateinit var binding: ActivityCreateProfileBinding
@@ -53,10 +55,14 @@ class CreateProfileActivity : AppCompatActivity() {
         ivProfile = binding.ivProfile
         etUsername = binding.etUserName
         etPhoneNum = binding.etPhoneNumber
-        btDone = binding.btDone
 
-        val storage = Firebase.storage
-        storageReference = storage.reference
+        storageReference = Firebase.storage.reference
+        databaseReference = Firebase.database.reference
+
+        btDone = binding.btDone
+        btDone.setOnClickListener {
+            onDoneButtonClick()
+        }
     }
 
     //tvUpload Clicked
@@ -84,14 +90,16 @@ class CreateProfileActivity : AppCompatActivity() {
         startActivityForResult(intent, 1)
     }
 
-    fun onDoneButtonClick(view: View){
+    private fun onDoneButtonClick(){
         if (checkData()){
             uploadData(userName, phoneNumber, selectedImageUri!!)
         }
     }
 
     private fun uploadData(name: String, phone: String, image: Uri) {
-        storageReference!!.child(firebaseAuth!!.uid + AppConstants.PATH).putFile(image).addOnSuccessListener {
+        val uid: String = FirebaseAuth.getInstance().currentUser!!.uid.toString()
+        Log.d("done", "uploadData: $uid")
+        storageReference!!.child(uid + AppConstants.PATH).putFile(image).addOnSuccessListener {
             val task = it.storage.downloadUrl
             task.addOnCompleteListener { uri ->
                 imageUrl = uri.result.toString()
@@ -100,8 +108,7 @@ class CreateProfileActivity : AppCompatActivity() {
                     "phone" to phone,
                     "image" to imageUrl
                 )
-
-                databaseReference!!.child(firebaseAuth!!.uid!!).updateChildren(map)
+                databaseReference!!.child(uid).updateChildren(map)
             }
         }
     }

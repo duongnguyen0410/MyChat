@@ -90,7 +90,6 @@
                         android:id="@+id/btDone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:onClick="onDoneButtonClick"
                         android:text="Done"
                         android:background="@drawable/button_background"
                         style="@android:style/Widget.Button"
