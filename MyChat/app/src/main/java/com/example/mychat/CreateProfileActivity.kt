@@ -100,6 +100,7 @@ class CreateProfileActivity : AppCompatActivity() {
                     "phone" to phone,
                     "image" to imageUrl
                 )
+
                 databaseReference!!.child(firebaseAuth!!.uid!!).updateChildren(map)
             }
         }
